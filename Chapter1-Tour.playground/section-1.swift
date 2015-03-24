@@ -42,10 +42,11 @@ var occupations = [
 occupations["Jayne"] = "Public Relations"
 occupations
 
-let emptyArray = [String]() // Fixed from book version
-let emptyDictionary = Dictionary<String, Float>()
+let emptyArray = [String]()
+let emptyDictionary = [String: Float]()
 
 shoppingList = []
+occupations = [:]
 
 let individualScores = [75, 43, 103, 87, 12]
 var teamScore = 0
@@ -127,14 +128,14 @@ do {
 m
 
 var firstForLoop = 0
-for i in 0...3 { // Fixed from book version
+for i in 0..<4 {
 	firstForLoop += i
 }
 firstForLoop
 
 var secondForLoop = 0
-for var i = 0; i < 3; ++i {
-	secondForLoop += i // Fixed from book version
+for var i = 0; i < 4; ++i {
+	secondForLoop += i
 }
 secondForLoop
 
@@ -148,10 +149,24 @@ func greetLunch(name: String, lunch: String) -> String {
 }
 greetLunch("Bob", "Pasta")
 
-func getGasPrices() -> (Double, Double, Double) {
-	return (3.59, 3.69, 3.79)
+func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+	var min = scores[0]
+	var max = scores[0]
+	var sum = 0
+	
+	for score in scores {
+		if score > max {
+			max = score
+		} else if score < min {
+			min = score
+		}
+		sum += score
+	}
+	return (min, max, sum)
 }
-getGasPrices()
+let statistics = calculateStatistics([5, 3, 100, 3, 9])
+statistics.sum
+statistics.2
 
 func sumOf(numbers: Int...) -> Int {
 	var sum = 0
@@ -196,7 +211,7 @@ func makeIncremeter() -> (Int -> Int) {
 var increment = makeIncremeter()
 increment(7)
 
-func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool { // Corrected from book version
+func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
 	for item in list {
 		if condition(item) {
 			return true
@@ -224,12 +239,11 @@ numbers.map({
 	return result
 })
 
-numbers.map({
-	number in 3 * number
-})
+let mappedNumbers = numbers.map({ number in 3 * number })
+mappedNumbers
 
-sorted([1, 5, 3, 12, 2]) // Fixed from book version
-	{ $0 > $1 }
+let sortedNumbers = sorted(numbers) { $0 > $1 }
+sortedNumbers
 
 class Shape {
 	let kind = "shape"
@@ -361,7 +375,6 @@ class Counter {
 		count += amount * times
 	}
 }
-
 var counter = Counter()
 counter.incrementBy(2, numberOfTimes: 7)
 
@@ -383,13 +396,13 @@ enum Rank: Int {
 		case .King:
 			return "king"
 		default:
-			return String(self.rawValue) // Fixed from book version
+			return String(self.rawValue)
 		}
 	}
 }
 
 let ace = Rank.Ace
-let aceRawValue = ace.rawValue // Fixed from book version
+let aceRawValue = ace.rawValue
 
 func compareRanks(first:Rank, second:Rank) -> Int {
 	if first.rawValue < second.rawValue {
@@ -404,7 +417,7 @@ compareRanks(Rank.Four, Rank.King)
 compareRanks(Rank.Four, Rank.Four)
 compareRanks(Rank.Two, Rank.Ace)
 
-if let convertedRank = Rank(rawValue: 3) { // Fixed from book version
+if let convertedRank = Rank(rawValue: 3) {
 	let threeDescription = convertedRank.simpleDescription()
 }
 
@@ -580,10 +593,10 @@ let protocolValue: ExampleProtocol = a
 protocolValue.simpleDescription
 // protocolValue.anotherProperty
 
-func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] { // Fixed from book version
-	var result = [ItemType]() // Fixed from book version
-	for i in 0...times { // Fixed from book version
-		result.append(item) // Fixed from book version
+func repeat<Item>(item: Item, times: Int) -> [Item] {
+	var result = [Item]()
+	for i in 0..<times {
+		result.append(item)
 	}
 	return result
 }
@@ -596,7 +609,7 @@ enum OptionalValue<T> {
 var possibleInteger: OptionalValue<Int> = .None
 possibleInteger = .Some(100)
 
-func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool { // Fixed from book version
+func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
 	for lhsItem in lhs {
 		for rhsItem in rhs {
 			if lhsItem == rhsItem {
